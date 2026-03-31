@@ -15,7 +15,9 @@ $paths = @(
 
 if ($All) {
     $paths += @(
-        (Join-Path $repoRoot "mf_test_output.iq")
+        (Join-Path $repoRoot "mf_test_output.iq"),
+        (Join-Path $repoRoot "mf_from_pcap.mdi"),
+        (Join-Path $repoRoot "mf_from_pcap.iq")
     )
 }
 
@@ -27,4 +29,3 @@ foreach ($path in $paths) {
 }
 
 Write-Host "Clean completed."
-

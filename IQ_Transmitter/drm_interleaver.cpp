@@ -2,13 +2,21 @@
 
 #include <array>
 #include <cstdint>
-#include <numeric>
 #include <random>
 #include <vector>
 
 namespace iqd {
 
 namespace {
+
+size_t Gcd(size_t a, size_t b) {
+    while (b != 0U) {
+        const size_t r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
 
 size_t ChooseCoprimeStep(size_t n) {
     if (n <= 1U) {
@@ -18,13 +26,13 @@ size_t ChooseCoprimeStep(size_t n) {
     static constexpr std::array<size_t, 6> preferred = {17U, 13U, 11U, 7U, 5U, 3U};
     for (size_t candidate : preferred) {
         const size_t step = candidate % n;
-        if (step != 0U && std::gcd(step, n) == 1U) {
+        if (step != 0U && Gcd(step, n) == 1U) {
             return step;
         }
     }
 
     for (size_t step = 2U; step < n; ++step) {
-        if (std::gcd(step, n) == 1U) {
+        if (Gcd(step, n) == 1U) {
             return step;
         }
     }
@@ -124,4 +132,5 @@ bool RunDrmInterleaverSelfTest() {
 }
 
 } // namespace iqd
+
 

@@ -1,5 +1,103 @@
+# ===== Build Output & Artifacts =====
+**/bin/
+**/obj/
+**/Debug/
+**/Release/
+**/x64/
+**/Win32/
 bin/
 obj/
-/packages/
+Debug/
+Release/
+x64/
+Win32/
+
+# ===== Visual Studio Files =====
+*.sln.iml
+.vs/
+.vscode/
+*.user
+*.rsuser
+*.suo
+*.sln.docstates
+*.VisualState.xml
+*.psess
+*.vsp
+*.vspx
+*.coverage
+
+# ===== C++ Compiler Output =====
+*.pdb
+*.ilk
+*.lib
+*.exp
+*.dll
+*.exe
+*.o
+*.a
+*.so
+
+# ===== IDE-Specific Files =====
+# Rider / IntelliJ
+.idea/
 riderModule.iml
 /_ReSharper.Caches/
+*.iml
+
+# CLion
+cmake-build-*/
+.CMakeLists.txt.user
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# ===== Python Files =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# ===== OS-Specific Files =====
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===== Logs & Temporary Files =====
+*.log
+*.tmp
+*.temp
+*.bak
+~*
+.swp
+.swo
+
+# ===== Project-Specific Build Scripts =====
+/build.ps1
+/clean.ps1
+/pcap_to_mdi.ps1
+
+# ===== Generated/Test Output Files =====
+/sample.mdi
+/sample.iq
+/mf_from_pcap.mdi
+/mf_from_pcap.iq
+/mf_test_output.iq
+/*.iqmeta
+/mf.pcap
+/packages/
+
+# ===== Dependencies =====
+/packages/
+vcpkg_installed/
+conan/

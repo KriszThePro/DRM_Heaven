@@ -1,5 +1,5 @@
 ﻿param(
-    [string]$InputPcap = "..\mf.pcap",
+    [string]$InputPcap = ".\mf.pcap",
     [string]$OutputMdi = ".\mf_from_pcap.mdi",
     [int]$DstPort = 1234,
     [Nullable[int]]$SrcPort = $null,
@@ -39,4 +39,3 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "PCAP to MDI conversion completed successfully."
-

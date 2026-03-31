@@ -1,0 +1,12 @@
+run_id=m6-balanced
+lab_tag=regression
+profile=balanced
+payload_bytes=540
+logical_frames=9
+ofdm_symbols=163
+mean_nearest_qpsk_distance=0
+tx_peak_after=0.441942
+tx_overrun_samples=0
+tx_underrun_events=0
+lock_proxy=1
+decode_proxy=1

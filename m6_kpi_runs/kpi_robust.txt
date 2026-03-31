@@ -1,0 +1,12 @@
+run_id=m6-robust
+lab_tag=regression
+profile=robust
+payload_bytes=540
+logical_frames=13
+ofdm_symbols=176
+mean_nearest_qpsk_distance=0
+tx_peak_after=0.464039
+tx_overrun_samples=0
+tx_underrun_events=0
+lock_proxy=1
+decode_proxy=1

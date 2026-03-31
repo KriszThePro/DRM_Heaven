@@ -155,20 +155,44 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cli.cpp" />
+    <ClCompile Include="drm_coder.cpp" />
+    <ClCompile Include="drm_interleaver.cpp" />
+    <ClCompile Include="drm_logical_framer.cpp" />
+    <ClCompile Include="drm_profiles.cpp" />
+    <ClCompile Include="drm_ofdm_modulator.cpp" />
+    <ClCompile Include="drm_tx_pipeline.cpp" />
     <ClCompile Include="file_io.cpp" />
     <ClCompile Include="fl2k_tx.cpp" />
+    <ClCompile Include="m6_validation.cpp" />
     <ClCompile Include="IQ_Transmitter.cpp" />
+    <ClCompile Include="iq_meta.cpp" />
+    <ClCompile Include="m7_compliance.cpp" />
     <ClCompile Include="qpsk_decoder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="drm_coder.h" />
+    <ClInclude Include="drm_interleaver.h" />
+    <ClInclude Include="drm_profiles.h" />
     <ClInclude Include="cli.h" />
+    <ClInclude Include="drm_logical_framer.h" />
+    <ClInclude Include="drm_ofdm_modulator.h" />
+    <ClInclude Include="drm_stage_interfaces.h" />
+    <ClInclude Include="drm_tx_pipeline.h" />
+    <ClInclude Include="m6_validation.h" />
     <ClInclude Include="file_io.h" />
     <ClInclude Include="fl2k_tx.h" />
     <ClInclude Include="iq_decoder_types.h" />
+    <ClInclude Include="iq_meta.h" />
+    <ClInclude Include="m7_compliance.h" />
     <ClInclude Include="qpsk_decoder.h" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LEGAL_REGIONS.md" />
     <Content Include="README.md" />
+    <Content Include="regression_m0.py" />
+    <Content Include="regression_m6.py" />
+    <Content Include="regression_m7.py" />
+    <Content Include="ROADMAP.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

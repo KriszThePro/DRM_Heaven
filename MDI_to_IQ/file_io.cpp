@@ -26,5 +26,17 @@ void WriteAllBytes(const std::string& path, const std::vector<uint8_t>& bytes) {
     }
 }
 
+void WriteTextFile(const std::string& path, const std::string& text) {
+    std::ofstream out(path, std::ios::binary);
+    if (!out) {
+        throw std::runtime_error("Cannot open output file: " + path);
+    }
+
+    out << text;
+    if (!out) {
+        throw std::runtime_error("Failed while writing output file: " + path);
+    }
+}
+
 } // namespace mdi
 

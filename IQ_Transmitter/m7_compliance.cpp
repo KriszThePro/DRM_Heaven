@@ -4,6 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <cstddef>
+#include <numeric>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -143,4 +144,5 @@ bool RunM7SelfTest() {
 }
 
 } // namespace iqd
+
 

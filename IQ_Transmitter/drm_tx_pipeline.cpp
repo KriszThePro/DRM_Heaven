@@ -1,58 +1,69 @@
 ﻿#include "drm_tx_pipeline.h"
 
 #include <algorithm>
-#include <cmath>
 #include <cstdint>
+#include <iomanip>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
+#include "drm_coder.h"
+#include "drm_interleaver.h"
+#include "drm_logical_framer.h"
+#include "drm_ofdm_modulator.h"
 #include "file_io.h"
+#include "fl2k_tx.h"
 
 namespace iqd {
 
 namespace {
 
 std::vector<uint8_t> StageChannelCoder(const std::vector<uint8_t>& in) {
-    // M1 skeleton: pass-through placeholder for DRM channel coding.
-    return in;
+    return DrmEncodePayload(in);
 }
 
 std::vector<uint8_t> StageInterleaver(const std::vector<uint8_t>& in) {
-    // M1 skeleton: pass-through placeholder for DRM interleaving.
-    return in;
+    return DrmInterleaveBytes(in);
 }
 
-std::vector<uint8_t> StageFrameBuilder(const std::vector<uint8_t>& in) {
-    // M1 skeleton: pass-through placeholder for FAC/SDC/MSC framing.
-    return in;
-}
+std::vector<float> StageOfdmMapper(const std::vector<uint8_t>& framedBytes,
+                                   const DrmPipelineConfig& cfg,
+                                   size_t* outSymbolCount,
+                                   TxConditioningTelemetry* telemetry) {
+    DrmOfdmConfig ofdmCfg;
+    ofdmCfg.fftSize = cfg.ofdmFftSize;
+    ofdmCfg.guardSamples = cfg.ofdmGuardSamples;
 
-std::vector<float> StageOfdmMapper(const std::vector<uint8_t>& framedBytes) {
-    // M1 skeleton: use deterministic QPSK mapping as a temporary OFDM placeholder.
-    constexpr float invSqrt2 = 0.70710678118F;
-    std::vector<float> iq;
-    iq.reserve(framedBytes.size() * 8U);
-
-    for (uint8_t by : framedBytes) {
-        for (int bit = 7; bit >= 0; bit -= 2) {
-            const uint8_t b0 = static_cast<uint8_t>((by >> bit) & 0x01U);
-            const uint8_t b1 = static_cast<uint8_t>((by >> (bit - 1)) & 0x01U);
-
-            float iSample = invSqrt2;
-            float qSample = invSqrt2;
-
-            if (b0 == 0U && b1 == 0U) { iSample = invSqrt2; qSample = invSqrt2; }
-            if (b0 == 0U && b1 == 1U) { iSample = -invSqrt2; qSample = invSqrt2; }
-            if (b0 == 1U && b1 == 1U) { iSample = -invSqrt2; qSample = -invSqrt2; }
-            if (b0 == 1U && b1 == 0U) { iSample = invSqrt2; qSample = -invSqrt2; }
-
-            iq.push_back(iSample);
-            iq.push_back(qSample);
-        }
+    if (outSymbolCount != nullptr) {
+        *outSymbolCount = EstimateDrmOfdmSymbolCount(framedBytes, ofdmCfg);
     }
 
-    return iq;
+    const std::vector<float> raw = BuildDrmOfdmIq(framedBytes, ofdmCfg);
+
+    TxConditioningConfig txCfg;
+    txCfg.scale = cfg.txScale;
+    txCfg.headroomDb = cfg.txHeadroomDb;
+    txCfg.clip = cfg.txClip;
+    txCfg.shape = cfg.txShape;
+    return ApplyTxConditioning(raw, txCfg, telemetry);
+}
+
+void DumpLogicalFramesIfNeeded(const DrmPipelineConfig& cfg,
+                               const std::vector<DrmLogicalFrame>& frames) {
+    if (!cfg.dumpStages) {
+        return;
+    }
+
+    const std::string prefix = cfg.dumpDir.empty() ? std::string(".") : cfg.dumpDir;
+    for (size_t i = 0; i < frames.size(); ++i) {
+        std::ostringstream oss;
+        oss << "drm_frame_" << std::setfill('0') << std::setw(4) << i;
+        WriteAllBytes(prefix + "\\" + oss.str() + "_fac.bin", frames[i].facBytes);
+        WriteAllBytes(prefix + "\\" + oss.str() + "_sdc.bin", frames[i].sdcBytes);
+        WriteAllBytes(prefix + "\\" + oss.str() + "_msc.bin", frames[i].mscBytes);
+        WriteAllBytes(prefix + "\\" + oss.str() + "_packed.bin", frames[i].packedBytes);
+    }
 }
 
 std::vector<uint8_t> FloatToBytes(const std::vector<float>& values) {
@@ -84,16 +95,28 @@ DrmPipelineResult RunDrmTxSkeleton(const std::vector<uint8_t>& payloadBytes,
 
     DrmPipelineResult out;
     out.codedBytes = StageChannelCoder(payloadBytes);
-    DumpStageIfNeeded(cfg, "m1_stage_coded.bin", out.codedBytes);
+    DumpStageIfNeeded(cfg, "drm_stage_coded.bin", out.codedBytes);
 
     out.interleavedBytes = StageInterleaver(out.codedBytes);
-    DumpStageIfNeeded(cfg, "m1_stage_interleaved.bin", out.interleavedBytes);
+    DumpStageIfNeeded(cfg, "drm_stage_interleaved.bin", out.interleavedBytes);
 
-    out.framedBytes = StageFrameBuilder(out.interleavedBytes);
-    DumpStageIfNeeded(cfg, "m1_stage_framed.bin", out.framedBytes);
+    const std::vector<DrmLogicalFrame> frames = AssembleDrmLogicalFrames(out.interleavedBytes,
+                                                                          cfg.serviceId,
+                                                                          cfg.mscBytesPerFrame);
+    out.logicalFrameCount = frames.size();
+    DumpLogicalFramesIfNeeded(cfg, frames);
 
-    out.ofdmIqF32Interleaved = StageOfdmMapper(out.framedBytes);
-    DumpStageIfNeeded(cfg, "m1_stage_ofdm_iq_f32.bin", FloatToBytes(out.ofdmIqF32Interleaved));
+    out.framedBytes = PackDrmLogicalFrames(frames);
+    DumpStageIfNeeded(cfg, "drm_stage_framed.bin", out.framedBytes);
+
+    TxConditioningTelemetry telem;
+    out.ofdmIqF32Interleaved = StageOfdmMapper(out.framedBytes, cfg, &out.ofdmSymbolCount, &telem);
+    out.txOverrunSamples = telem.overrunSamples;
+    out.txClippedSamples = telem.clippedSamples;
+    out.txUnderrunEvents = telem.underrunEvents;
+    out.txPeakBefore = telem.peakBefore;
+    out.txPeakAfter = telem.peakAfter;
+    DumpStageIfNeeded(cfg, "drm_stage_ofdm_iq_f32.bin", FloatToBytes(out.ofdmIqF32Interleaved));
 
     return out;
 }

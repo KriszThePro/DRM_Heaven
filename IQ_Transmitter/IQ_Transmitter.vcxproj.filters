@@ -21,18 +21,66 @@
     <ClCompile Include="cli.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="drm_coder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drm_interleaver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drm_logical_framer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drm_ofdm_modulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drm_profiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drm_tx_pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="file_io.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fl2k_tx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="iq_meta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="qpsk_decoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m6_validation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m7_compliance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cli.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_coder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_interleaver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_logical_framer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_ofdm_modulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_profiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_stage_interfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drm_tx_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="file_io.h">
@@ -44,12 +92,36 @@
     <ClInclude Include="iq_decoder_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="iq_meta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="qpsk_decoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m6_validation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m7_compliance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LEGAL_REGIONS.md">
+      <Filter>Resource Files</Filter>
+    </Content>
     <Content Include="README.md">
+      <Filter>Resource Files</Filter>
+    </Content>
+    <Content Include="regression_m0.py">
+      <Filter>Resource Files</Filter>
+    </Content>
+    <Content Include="regression_m6.py">
+      <Filter>Resource Files</Filter>
+    </Content>
+    <Content Include="regression_m7.py">
+      <Filter>Resource Files</Filter>
+    </Content>
+    <Content Include="ROADMAP.md">
       <Filter>Resource Files</Filter>
     </Content>
   </ItemGroup>

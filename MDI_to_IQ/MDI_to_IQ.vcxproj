@@ -154,7 +154,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="af_decoder.cpp" />
+    <ClCompile Include="cli.cpp" />
+    <ClCompile Include="crc16.cpp" />
+    <ClCompile Include="file_io.cpp" />
+    <ClCompile Include="iq_meta.cpp" />
+    <ClCompile Include="iq_processing.cpp" />
     <ClCompile Include="MDI_to_IQ.cpp" />
+    <ClCompile Include="sample_mdi.cpp" />
+    <ClCompile Include="tag_parser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="__TEST_FILES__\mf.pcap.kimenet.mdi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="af_decoder.h" />
+    <ClInclude Include="bit_reader.h" />
+    <ClInclude Include="cli.h" />
+    <ClInclude Include="crc16.h" />
+    <ClInclude Include="endian_utils.h" />
+    <ClInclude Include="file_io.h" />
+    <ClInclude Include="iq_meta.h" />
+    <ClInclude Include="iq_processing.h" />
+    <ClInclude Include="mdi_types.h" />
+    <ClInclude Include="sample_mdi.h" />
+    <ClInclude Include="tag_parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

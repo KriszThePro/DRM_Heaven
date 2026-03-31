@@ -1,0 +1,10 @@
+input_file=.\sample_refactor.iq
+input_format=f32
+complex_samples=2160
+i_mean=-0.00327364
+q_mean=0.00851147
+i_rms=0.707107
+q_rms=0.707107
+mean_nearest_qpsk_distance=0
+recovered_bits=4320
+recovered_bytes=540

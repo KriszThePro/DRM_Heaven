@@ -1,6 +1,5 @@
 ﻿#include "m6_validation.h"
 
-#include <cmath>
 #include <sstream>
 #include <string>
 
@@ -108,4 +107,5 @@ bool RunM6SelfTest() {
 }
 
 } // namespace iqd
+
 

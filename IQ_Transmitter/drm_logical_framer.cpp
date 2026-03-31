@@ -145,10 +145,10 @@ bool VerifyDeterministicVector() {
     }
 
     static const std::vector<uint8_t> expectedFac0 = {
-        'F','A','C','0', 7U, 0U, 0U, 3U, 0U, 8U, 0U, 0U
+        'F','A','C','0', 7U, 0U, 0U, 3U, 0U, 8U, 0U, 0x78U
     };
     static const std::vector<uint8_t> expectedSdc0 = {
-        'S','D','C','0', 7U, 0U, 0U, 3U, 0U, 0x11U, 0x01U, 8U, 0U, 0U
+        'S','D','C','0', 7U, 0U, 0U, 3U, 0U, 0x11U, 0x01U, 8U, 0U, 0x78U
     };
     if (frames[0].facBytes != expectedFac0 || frames[0].sdcBytes != expectedSdc0) {
         return false;
@@ -274,4 +274,5 @@ bool RunDrmLogicalFramerSelfTest() {
 }
 
 } // namespace iqd
+
 

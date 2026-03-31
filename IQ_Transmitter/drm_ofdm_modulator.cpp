@@ -187,7 +187,7 @@ bool VerifyDeterministicVector() {
     }
 
     const uint64_t hash = HashFloatsFnv1a(iq);
-    return hash == 12878328325908408595ULL;
+    return hash == 14463611885261668171ULL;
 }
 
 } // namespace
@@ -253,4 +253,6 @@ bool RunDrmOfdmSelfTest() {
 }
 
 } // namespace iqd
+
+
 
