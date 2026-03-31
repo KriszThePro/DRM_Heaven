@@ -87,15 +87,31 @@ Thumbs.db
 /clean.ps1
 /pcap_to_mdi.ps1
 
-# ===== Generated/Test Output Files =====
+# ===== Generated/Test Output Files & Dumps =====
 /sample.mdi
 /sample.iq
+/sample_refactor.iq
+/sample_refactor.mdi
+/sample_refactor.decoded.bin
+/sample_refactor.decode_report.txt
 /mf_from_pcap.mdi
 /mf_from_pcap.iq
 /mf_test_output.iq
-/*.iqmeta
 /mf.pcap
+/*.iqmeta
+/meta_test.*
 /packages/
+
+# ===== DRM Processing Dump Folders =====
+/m2_dumps/
+/m3_dumps/
+/m4_dumps/
+/m5_dumps/
+/m6_dumps/
+/m6_kpi_runs/
+/m7_dumps/
+/m6_kpi.txt
+/m7_kpi.txt
 
 # ===== Dependencies =====
 /packages/
